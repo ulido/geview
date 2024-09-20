@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.gffService.loadFromURL('/example.gff');
+    this.gffService.loadFromURL('./example.gff');
   }
 
   fileDropHandler(event: Event) {
