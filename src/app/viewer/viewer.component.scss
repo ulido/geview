@@ -1,0 +1,135 @@
+
+* {
+    --type-color: gray;
+}
+*[data-type="gene"] {
+    --type-color: orange;
+}
+*[data-type="mRNA"] {
+    --type-color: red;
+}
+*[data-type="exon"] {
+    --type-color: teal;
+}
+*[data-type="CDS"] {
+    --type-color: cyan;
+}
+*[data-type="three_prime_UTR"],
+*[data-type="five_prime_UTR"] {
+    --type-color: magenta;
+}
+
+:host {
+    height: 100%;
+}
+mat-drawer-container {
+    height: 100%;
+}
+mat-drawer-content {
+    background-color: white;
+}
+div#container {
+    width: 100%;
+    overflow-x: scroll;
+    height: 100%;
+    padding-top: 25px;
+}
+div#gridcontainer {
+    display: block;
+    width: 10000px;
+    position: absolute;
+
+    div.grid:before {
+        content: attr(data-label);
+        position: absolute;
+        top: -2em;
+        left: 0;
+        transform: translateX(-50%);
+        font-size: 6pt;
+        color: #999;
+    }
+    div.grid {
+        border-left: 1px solid #ccc;
+        position: absolute;
+        top: -10px;
+        width: 1px;
+        height: 100vh;
+    }
+
+}
+ul.sequence {
+    display: block;
+    width: 10000em;
+    position: relative;
+    height: 0.25em;
+
+    li {
+        display: block;
+        position: absolute;
+        top: 0;
+        height: 0.25em;
+        width: 1em;
+    }
+    li[data-nt="A"] {
+        background-color: yellow;
+    }
+    li[data-nt="T"] {
+        background-color: #f9bfbf;
+    }
+    li[data-nt="C"] {
+        background-color: lightgreen;
+    }
+    li[data-nt="G"] {
+        background-color: #90d5ff;
+    }
+}
+ul.genes {
+    display: block;
+    width: 10000px;
+    position: relative;
+
+    li {
+        display: block;
+        position: absolute;
+        top: 0;
+        background-color: gray;
+        height: 2em;
+        line-height: 2em;
+        text-align: center;
+        overflow: hidden;
+        min-width: 1em;
+        background-color: var(--type-color);
+    }
+    // li:before {
+    //     content: "";
+    //     position: absolute;
+    //     margin: -1.41421356237em;
+    //     width: 3em;
+    //     height: 3em;
+    //     transform: rotate(45deg);
+    //     background-color: white;
+    // }
+    li[data-strand="-"] {
+        clip-path: polygon(
+            0 100%,
+            min(2em, 100%) 0,
+            100% 0,
+            100% 100%,
+        );
+    }
+    li[data-strand="+"] {
+        color: red;
+        clip-path: polygon(
+            100% 100%,
+            max(100% - 2em, 0) 0,
+            0 0,
+            0 100%,
+        );
+    }
+}
+
+mat-list-option {
+    span.type-label {
+        color: var(--type-color);
+    }
+}

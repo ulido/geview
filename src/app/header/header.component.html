@@ -1,0 +1,38 @@
+<mat-toolbar color="primary" role="heading">
+  <button mat-icon-button (click)="onToggleDrawer()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-form-field>
+    <mat-label>Sequence region</mat-label>
+    <mat-select #selectSequenceRegions
+      (selectionChange)="selectSequenceRegion($event.value)">
+      @if(gffService.gff | async; as gff) {
+        @for (seqreg of (gff.sortedSequenceRegions()); track seqreg.name) {
+          <mat-option value="{{seqreg.name}}">{{ seqreg.name }}</mat-option>
+        }
+      }
+    </mat-select>
+  </mat-form-field>
+  <form class="search-form">
+    <mat-form-field class="search-field">
+      <mat-label>Search</mat-label>
+      <input #searchInput
+            type="text"
+            placeholder="Entry ID"
+            aria-label="Entry ID"
+            matInput
+            [formControl]="searchControl"
+            [matAutocomplete]="auto"
+            (input)="filter()"
+            (focus)="filter()">
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        requireSelection
+        (optionSelected)="searchOptionSelected($event)">
+        @for (entry of filteredSearchOptions | slice:0:20; track entry) {
+          <mat-option [value]="entry">{{entry}}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</mat-toolbar>

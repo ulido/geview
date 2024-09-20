@@ -1,0 +1,31 @@
+<mat-drawer-container>
+    <mat-drawer mode="side" [opened]="drawerOpened">
+        <mat-selection-list (selectionChange)="typeSelectionChange($event)">
+        @for (type of extractEntryTypes(sequenceRegion); track type) {
+            <mat-list-option [value]="type" selected><span [attr.data-type]="type" class="type-label">{{ type }}</span></mat-list-option>
+        }
+        </mat-selection-list>
+    </mat-drawer>
+    <mat-drawer-content>
+    @if (sequenceRegion) {
+        <div id="container">
+            <div id="gridcontainer">
+                @for (line of gridLines(sequenceRegion, 0.01); track line.position) {
+                    <div class="grid" [style.left]="line.position + 'px'" [attr.data-label]="line.label"></div>
+                }
+            </div>
+            <ul id="entries" class="genes">
+            @for (entry of (displayEntries | async); track entry.entry.ID) {
+                <li
+                    [style.left]="(entry.left) + 'em'"
+                    [style.width]="(entry.width) + 'em'"
+                    [style.top]="(entry.top) + 'em'"
+                    [attr.data-type]="entry.entry.type"
+                    [attr.data-strand]="entry.entry.strand"
+                >{{ entry.entry.ID }}</li>
+            }
+            </ul>
+        </div>
+    }
+    </mat-drawer-content>
+</mat-drawer-container>
